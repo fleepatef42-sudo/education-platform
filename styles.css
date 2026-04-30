@@ -55,6 +55,13 @@ a {
     text-decoration: none;
 }
 
+#planner,
+#subjects,
+#sessions,
+#library {
+    scroll-margin-top: 112px;
+}
+
 button,
 input,
 select,
@@ -141,6 +148,7 @@ a {
     justify-content: center;
     flex-wrap: wrap;
     gap: 10px;
+    min-width: 0;
 }
 
 .topbar__nav a {
@@ -150,6 +158,7 @@ a {
     border-radius: 999px;
     color: var(--muted);
     font-size: 0.92rem;
+    white-space: nowrap;
 }
 
 .topbar__nav a:hover,
@@ -930,12 +939,67 @@ a {
 
 @media (max-width: 760px) {
     .app-shell {
-        width: min(100% - 20px, 1320px);
-        padding-top: 18px;
+        width: min(100% - 16px, 1320px);
+        padding: 14px 0 28px;
     }
 
-    .topbar,
-    .topbar__nav,
+    .topbar {
+        position: static;
+        gap: 12px;
+        padding: 12px;
+        margin-bottom: 18px;
+    }
+
+    .brand__mark {
+        width: 42px;
+        height: 42px;
+    }
+
+    .brand__text strong {
+        font-size: 0.96rem;
+    }
+
+    .brand__text small {
+        font-size: 0.78rem;
+    }
+
+    .topbar__nav {
+        flex-direction: row;
+        align-items: stretch;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        width: 100%;
+        gap: 8px;
+        padding-bottom: 2px;
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+
+    .topbar__nav::-webkit-scrollbar {
+        display: none;
+    }
+
+    .topbar__nav a {
+        flex: 0 0 auto;
+        min-height: 36px;
+        padding: 8px 12px;
+        font-size: 0.88rem;
+    }
+
+    .topbar__meta {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        width: 100%;
+        gap: 8px;
+    }
+
+    .status-pill {
+        justify-content: center;
+        min-width: 0;
+        padding: 0 10px;
+        font-size: 0.84rem;
+    }
+
     .topbar__meta,
     .panel__head,
     .task-item__top,
@@ -948,8 +1012,6 @@ a {
     }
 
     .overview,
-    .overview__highlights,
-    .stats-row,
     .focus-strip,
     .workspace-grid,
     .subject-grid,
@@ -964,22 +1026,226 @@ a {
         grid-column: span 1;
     }
 
+    .overview {
+        gap: 16px;
+        margin-bottom: 14px;
+    }
+
+    .overview__copy {
+        gap: 14px;
+        padding: 0;
+    }
+
     .overview h1 {
-        font-size: 2.1rem;
+        font-size: 1.88rem;
+        line-height: 1.14;
+    }
+
+    .overview__lead {
+        font-size: 0.96rem;
+    }
+
+    .overview__actions {
+        display: grid;
+        grid-template-columns: 1fr;
+        margin: 4px 0 0;
+    }
+
+    .overview__highlights {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .highlight-card {
+        min-height: auto;
+        padding: 14px;
+    }
+
+    .overview__rail {
+        gap: 10px;
+    }
+
+    .visual-frame {
+        min-height: 220px;
+        aspect-ratio: auto;
+    }
+
+    .agenda-card {
+        padding: 16px;
+    }
+
+    .preview-card__chips {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 8px;
+    }
+
+    .mini-chip {
+        justify-content: center;
+        white-space: normal;
+        min-height: 44px;
+        padding: 10px 12px;
+    }
+
+    .stats-row {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+        margin-bottom: 14px;
+    }
+
+    .stat-tile {
+        min-height: 118px;
+        padding: 16px;
+    }
+
+    .stat-tile strong {
+        margin: 10px 0 4px;
+        font-size: 1.4rem;
+    }
+
+    .focus-strip {
+        gap: 10px;
+        margin-bottom: 14px;
+    }
+
+    .focus-strip__card {
+        min-height: auto;
+        padding: 14px;
+    }
+
+    .workspace-grid {
+        gap: 14px;
+    }
+
+    .panel {
+        padding: 16px;
+    }
+
+    .panel__head {
+        margin-bottom: 14px;
+        gap: 10px;
+    }
+
+    .panel__head h2 {
+        font-size: 1.12rem;
     }
 
     .segmented-control {
-        grid-auto-flow: row;
+        width: 100%;
+        grid-auto-flow: unset;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
     }
 
-    .btn,
-    .icon-button,
-    .segmented-control button,
-    .preset-row button {
+    .segmented-control button {
+        padding: 0 10px;
+        font-size: 0.88rem;
+    }
+
+    .task-form {
+        gap: 10px;
+    }
+
+    .button-row {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+    }
+
+    .task-form .btn,
+    .button-row .btn {
         width: 100%;
+    }
+
+    .timer-display {
+        min-height: 148px;
+        font-size: 2.35rem;
+    }
+
+    .preset-row {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 8px;
+    }
+
+    .preset-row button,
+    .segmented-control button,
+    .overview__actions .btn,
+    .task-form .btn,
+    .button-row .btn {
+        width: 100%;
+    }
+
+    .field textarea {
+        min-height: 160px;
+    }
+
+    .task-actions {
+        justify-content: flex-start;
+    }
+
+    .icon-button {
+        width: 40px;
+        min-width: 40px;
+    }
+
+    .subject-card,
+    .session-card,
+    .resource-card {
+        padding: 14px;
+    }
+
+    .resource-card {
+        min-height: auto;
+    }
+
+    .agenda-list__item strong {
+        text-align: right;
+    }
+
+    .status-pill,
+    .mini-chip,
+    .agenda-chip,
+    .preset-row button {
+        max-width: 100%;
     }
 
     .slider-row {
         grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    #planner,
+    #subjects,
+    #sessions,
+    #library {
+        scroll-margin-top: 24px;
+    }
+
+    .app-shell {
+        width: min(100% - 12px, 1320px);
+    }
+
+    .topbar__meta,
+    .stats-row,
+    .button-row {
+        grid-template-columns: 1fr;
+    }
+
+    .status-pill {
+        justify-content: flex-start;
+    }
+
+    .overview h1 {
+        font-size: 1.72rem;
+    }
+
+    .segmented-control {
+        grid-template-columns: 1fr;
+    }
+
+    .timer-display {
+        min-height: 132px;
+        font-size: 2rem;
     }
 }
