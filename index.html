@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StudyFlow | مساحة تعليمية يومية</title>
+    <meta name="description" content="صفحة تعليمية مستقلة لتنظيم المهام الدراسية، متابعة المواد، تشغيل جلسات تركيز، وحفظ ملاحظات الطالب في مكان واحد.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./styles.css">
+    <script defer src="https://unpkg.com/lucide@latest"></script>
+    <script defer src="./app.js"></script>
+</head>
+<body class="page-body">
+    <div class="page-backdrop" aria-hidden="true"></div>
+
+    <div class="app-shell">
+        <header class="topbar">
+            <a class="brand" href="index.html" aria-label="العودة إلى الصفحة التعليمية">
+                <span class="brand__mark">S</span>
+                <span class="brand__text">
+                    <strong>StudyFlow</strong>
+                    <small>Daily learning workspace</small>
+                </span>
+            </a>
+
+            <nav class="topbar__nav" aria-label="أقسام الصفحة">
+                <a href="#planner">المهام</a>
+                <a href="#subjects">المواد</a>
+                <a href="#sessions">الجدول</a>
+                <a href="#library">المكتبة</a>
+            </nav>
+
+            <div class="topbar__meta">
+                <span class="status-pill">
+                    <i data-lucide="graduation-cap"></i>
+                    مساحة مستقلة
+                </span>
+                <span class="status-pill">
+                    <i data-lucide="shield-check"></i>
+                    حفظ محلي
+                </span>
+            </div>
+        </header>
+
+        <main>
+            <section class="overview">
+                <div class="overview__copy">
+                    <span class="eyebrow">Education Workspace</span>
+                    <h1>واجهة دراسة هادئة تخليك شايف يومك كله بدون زحمة.</h1>
+                    <p class="overview__lead">
+                        StudyFlow مساحة تعليمية مستقلة تجمع التخطيط، المراجعة، جلسات التركيز، ومؤشرات التقدم
+                        داخل تجربة عربية واضحة ومريحة للشغل اليومي على اللابتوب أو الموبايل.
+                    </p>
+
+                    <div class="overview__actions">
+                        <button class="btn btn--primary" id="loadDemoBtn" type="button">
+                            <i data-lucide="sparkles"></i>
+                            تحميل بيانات تجريبية
+                        </button>
+                        <a class="btn btn--secondary" href="#planner">
+                            <i data-lucide="list-todo"></i>
+                            ابدأ التخطيط
+                        </a>
+                    </div>
+
+                    <div class="overview__highlights">
+                        <article class="highlight-card">
+                            <strong>مهمات أوضح</strong>
+                            <span>فرز سريع حسب اليوم أو المكتمل</span>
+                        </article>
+                        <article class="highlight-card">
+                            <strong>جلسات تركيز</strong>
+                            <span>مؤقت مباشر مع مدد جاهزة</span>
+                        </article>
+                        <article class="highlight-card">
+                            <strong>متابعة ثابتة</strong>
+                            <span>تقدم المواد والملاحظات في نفس المساحة</span>
+                        </article>
+                    </div>
+                </div>
+
+                <div class="overview__rail">
+                    <div class="visual-frame">
+                        <img
+                            src="https://images.unsplash.com/photo-1513258496099-48168024aec0?auto=format&fit=crop&w=1200&q=80"
+                            alt="طالب يراجع دراسته على مكتب منظم"
+                            loading="lazy"
+                        >
+                    </div>
+
+                    <article class="agenda-card">
+                        <div class="agenda-card__head">
+                            <span class="eyebrow">الجلسة القادمة</span>
+                            <span class="agenda-chip">Ready</span>
+                        </div>
+
+                        <h2 id="nextSessionTitle">--</h2>
+                        <p id="nextSessionMeta">أضف أو حدّث جلساتك اليومية.</p>
+
+                        <div class="preview-card__chips">
+                            <span class="mini-chip">
+                                <i data-lucide="clock-3"></i>
+                                <span id="nextSessionTime">--</span>
+                            </span>
+                            <span class="mini-chip">
+                                <i data-lucide="book-open-text"></i>
+                                دراسة منظمة
+                            </span>
+                        </div>
+
+                        <div class="agenda-list">
+                            <div class="agenda-list__item">
+                                <span>الهدف الحالي</span>
+                                <strong>إنهاء أولويات اليوم</strong>
+                            </div>
+                            <div class="agenda-list__item">
+                                <span>وضع الصفحة</span>
+                                <strong>هدوء وتركيز</strong>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </section>
+
+            <section class="stats-row" aria-label="إحصائيات سريعة">
+                <article class="stat-tile stat-tile--teal">
+                    <span>إنجاز المهام</span>
+                    <strong id="statCompletion">0%</strong>
+                    <small>نسبة التنفيذ الحالية</small>
+                </article>
+                <article class="stat-tile stat-tile--blue">
+                    <span>ساعات اليوم</span>
+                    <strong id="statHours">0.0</strong>
+                    <small>من الجدول المكتمل</small>
+                </article>
+                <article class="stat-tile stat-tile--amber">
+                    <span>أقرب اختبار</span>
+                    <strong id="statExam">--</strong>
+                    <small id="statExamLabel">لا يوجد موعد بعد</small>
+                </article>
+                <article class="stat-tile stat-tile--rose">
+                    <span>سلسلة المذاكرة</span>
+                    <strong id="statStreak">0 أيام</strong>
+                    <small>التزام متواصل</small>
+                </article>
+            </section>
+
+            <section class="focus-strip" aria-label="ملخص سريع">
+                <article class="focus-strip__card">
+                    <i data-lucide="target"></i>
+                    <div>
+                        <strong>أولويات واضحة</strong>
+                        <p>شايف المهم اليوم من أول الشاشة بدون تشتيت.</p>
+                    </div>
+                </article>
+                <article class="focus-strip__card">
+                    <i data-lucide="timer-reset"></i>
+                    <div>
+                        <strong>إيقاع مذاكرة ثابت</strong>
+                        <p>ابدأ جلسة تركيز سريعة وارجع للشغل فورًا.</p>
+                    </div>
+                </article>
+                <article class="focus-strip__card">
+                    <i data-lucide="notebook-pen"></i>
+                    <div>
+                        <strong>كل حاجة في مكانها</strong>
+                        <p>ملاحظات، تقدم، وجلسات بدون التنقل بين ملفات كتير.</p>
+                    </div>
+                </article>
+            </section>
+
+            <section class="workspace-grid">
+                <article class="panel panel--wide" id="planner">
+                    <div class="panel__head">
+                        <div>
+                            <span class="eyebrow">Task Planner</span>
+                            <h2>المهام الدراسية</h2>
+                            <p>أضف الواجبات والمراجعات وحدد أولويتها، ثم تابع التنفيذ من نفس المكان.</p>
+                        </div>
+
+                        <div class="segmented-control" id="taskFilters">
+                            <button class="is-active" type="button" data-filter="all">الكل</button>
+                            <button type="button" data-filter="today">اليوم</button>
+                            <button type="button" data-filter="done">المكتمل</button>
+                        </div>
+                    </div>
+
+                    <form class="task-form" id="taskForm">
+                        <label class="field field--grow">
+                            <span>المهمة</span>
+                            <input id="taskTitle" type="text" placeholder="مثال: حل واجب الفيزياء" required>
+                        </label>
+
+                        <label class="field">
+                            <span>المادة</span>
+                            <select id="taskSubject"></select>
+                        </label>
+
+                        <label class="field">
+                            <span>التاريخ</span>
+                            <input id="taskDate" type="date" required>
+                        </label>
+
+                        <label class="field">
+                            <span>الأولوية</span>
+                            <select id="taskPriority">
+                                <option value="high">عالية</option>
+                                <option value="medium">متوسطة</option>
+                                <option value="low">هادئة</option>
+                            </select>
+                        </label>
+
+                        <button class="btn btn--primary btn--icon" type="submit">
+                            <i data-lucide="plus"></i>
+                            إضافة
+                        </button>
+                    </form>
+
+                    <div class="task-list" id="taskList"></div>
+                </article>
+
+                <article class="panel panel--soft">
+                    <div class="panel__head">
+                        <div>
+                            <span class="eyebrow">Focus Mode</span>
+                            <h2>مؤقت التركيز</h2>
+                            <p>شغّل جلسة 25 أو 45 أو 60 دقيقة للمذاكرة المركزة.</p>
+                        </div>
+                    </div>
+
+                    <div class="timer-display" id="timerDisplay">25:00</div>
+
+                    <div class="preset-row" id="timerPresets">
+                        <button class="is-active" type="button" data-minutes="25">25</button>
+                        <button type="button" data-minutes="45">45</button>
+                        <button type="button" data-minutes="60">60</button>
+                    </div>
+
+                    <div class="button-row">
+                        <button class="btn btn--primary" id="timerToggleBtn" type="button">
+                            <i data-lucide="play"></i>
+                            ابدأ
+                        </button>
+                        <button class="btn btn--secondary" id="timerResetBtn" type="button">
+                            <i data-lucide="rotate-ccw"></i>
+                            إعادة
+                        </button>
+                    </div>
+
+                    <p class="panel-note" id="timerStatus">اختر مدة وابدأ جلستك الحالية.</p>
+                </article>
+
+                <article class="panel panel--soft">
+                    <div class="panel__head">
+                        <div>
+                            <span class="eyebrow">Quick Notes</span>
+                            <h2>ملاحظات سريعة</h2>
+                            <p>سجّل نقطة مهمة أو ملخص قصير قبل ما تضيع منك.</p>
+                        </div>
+                    </div>
+
+                    <label class="field field--stacked" for="quickNote">
+                        <span>مذكرتك</span>
+                        <textarea id="quickNote" rows="9" placeholder="اكتب هنا أهم فكرة أو تلخيص سريع للحصة..."></textarea>
+                    </label>
+
+                    <div class="button-row">
+                        <button class="btn btn--primary" id="saveNoteBtn" type="button">
+                            <i data-lucide="save"></i>
+                            حفظ الملاحظة
+                        </button>
+                    </div>
+
+                    <p class="panel-note" id="noteStatus">الملاحظة تُحفظ محليًا على نفس الجهاز.</p>
+                </article>
+
+                <article class="panel panel--wide" id="subjects">
+                    <div class="panel__head">
+                        <div>
+                            <span class="eyebrow">Subjects</span>
+                            <h2>تقدم المواد</h2>
+                            <p>حدّث نسبة الإنجاز لكل مادة وشوف أقرب موعد مرتبط بها.</p>
+                        </div>
+                    </div>
+
+                    <div class="subject-grid" id="subjectGrid"></div>
+                </article>
+
+                <article class="panel panel--wide" id="sessions">
+                    <div class="panel__head">
+                        <div>
+                            <span class="eyebrow">Today Plan</span>
+                            <h2>جدول اليوم</h2>
+                            <p>جلسات منظمة مع زر سريع لتحديد ما تم إنجازه.</p>
+                        </div>
+                    </div>
+
+                    <div class="session-grid" id="sessionGrid"></div>
+                </article>
+
+                <article class="panel panel--wide" id="library">
+                    <div class="panel__head">
+                        <div>
+                            <span class="eyebrow">Study Library</span>
+                            <h2>مكتبة الدراسة السريعة</h2>
+                            <p>بطاقات منظمة لأنواع المصادر التي تحتاجها خلال اليوم الدراسي.</p>
+                        </div>
+                    </div>
+
+                    <div class="resource-grid">
+                        <article class="resource-card resource-card--teal">
+                            <i data-lucide="file-text"></i>
+                            <h3>ملخصات المحاضرات</h3>
+                            <p>مراجعة سريعة قبل الحصة أو الاختبار القصير.</p>
+                            <span>PDF + Notes</span>
+                        </article>
+                        <article class="resource-card resource-card--blue">
+                            <i data-lucide="monitor-play"></i>
+                            <h3>فيديوهات الشرح</h3>
+                            <p>مصادر مرئية مرتبة حسب المادة والدرس.</p>
+                            <span>Video Lessons</span>
+                        </article>
+                        <article class="resource-card resource-card--amber">
+                            <i data-lucide="flask-conical"></i>
+                            <h3>تجارب وتمارين</h3>
+                            <p>تدريب عملي ومراجعات تطبيقية لحل المسائل.</p>
+                            <span>Practice Sets</span>
+                        </article>
+                        <article class="resource-card resource-card--rose">
+                            <i data-lucide="messages-square"></i>
+                            <h3>أسئلة المراجعة</h3>
+                            <p>أسئلة قصيرة تساعدك على تثبيت أهم النقاط.</p>
+                            <span>Flash Review</span>
+                        </article>
+                    </div>
+                </article>
+            </section>
+        </main>
+    </div>
+</body>
+</html>
